@@ -59,18 +59,26 @@ scPlayer.load('https://soundcloud.com/dan-deacon/sets/feel-the-lightning-track-i
 
 ## API
 
-### `new SoundCloudAudio('YOUR_CLIENT_ID')`
+#### `new SoundCloudAudio('YOUR_CLIENT_ID')`
 
 ### Methods
 
-### `load('url', callback)`
-### `play([options])`
-### `pause()`
-### `next()`
-### `previous()`
-### `seek()`
+#### `load('url', callback)`
+#### `play([options])`
+#### `pause()`
+#### `next()`
+#### `previous()`
+#### `seek()`
 
 ### Events
 
-### `onTimeUpdate(func)`
-### `onAudioEnded(func)`
+#### `onTimeUpdate`
+#### `onAudioEnded`
+
+### Props
+
+#### `audio`
+#### `duration`
+#### `playing`
+
+## License
