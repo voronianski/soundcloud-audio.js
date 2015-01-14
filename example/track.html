@@ -16,7 +16,6 @@
         var player = global.player = new SoundCloudAudio('08f79801a998c381762ec5b15e4914d5');
 
         var prettyTime = function (time) {
-            console.log(time);
             var hours = Math.floor(time / 3600);
             var mins = '0' + Math.floor((time % 3600) / 60);
             var secs = '0' + Math.floor((time % 60));
@@ -42,15 +41,15 @@
             // track timings
             var $timer = document.createElement('span');
             var renderTimer = function () {
-                $timer.innerText = prettyTime(player.currentTime)+'/'+prettyTime(player.duration);
+                $timer.innerText = prettyTime(player.audio.currentTime)+'/'+prettyTime(player.duration);
             }
             renderTimer();
             $info.appendChild($timer);
 
             // rerender timer on every second
-            player.audio.addEventListener('timeupdate', function () {
+            player.onTimeUpdate = function () {
                 renderTimer();
-            });
+            };
 
             // album cover
             var $img = document.createElement('img');
@@ -60,7 +59,6 @@
             var $button = document.createElement('button');
             $button.innerHTML = 'Play';
             $button.addEventListener('click', function () {
-                console.log(player.playing);
                 if (player.playing) {
                     this.innerHTML = 'Play';
                     player.pause();
