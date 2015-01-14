@@ -61,19 +61,22 @@ scPlayer.load('https://soundcloud.com/dan-deacon/sets/feel-the-lightning-track-i
 
 #### `new SoundCloudAudio('YOUR_CLIENT_ID')`
 
+Create an instance of _SoundCloudAudio_, internally creates HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) prop. Client ID string is required, so get it here - https://developers.soundcloud.com.
+
 ### Methods
 
 #### `load('url', callback)`
 
-Load
-
 #### `play([options])`
 
-
 #### `pause()`
+
 #### `next()`
+
 #### `previous()`
+
 #### `seek()`
+
 #### `destroy()`
 
 ### Props
@@ -113,6 +116,11 @@ scPlayer.onAudioEnded = function () {
     console.log(scPlayer.track.title + ' just ended!');
 };
 ```
+
+## Next Goals
+
+- Provide streaming options in order to integrate with [Waveform.js](http://waveformjs.org/)
+- Volume control
 
 ## License
 
