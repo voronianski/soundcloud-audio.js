@@ -92,7 +92,9 @@ Shows the current state of the player, returns `false` or source of a currently 
 
 ### Events Handlers
 
-_SoundCloudAudio_ starts to listen on 2 events when it's initialized - `timeupdate` and `ended`. Use these native handlers and override them, instance of `audio`  is passed as argument. 
+_SoundCloudAudio_ starts to listen on 2 events when it's initialized - `timeupdate` and `ended`. Use these native handlers and override them for your use cases, instance of `audio`  is passed as argument. 
+
+Listeners will be removed when _SoundCloudAudio_ is [destroy](https://github.com/voronianski/soundcloud-audio.js#destroy)ed.
 
 #### `onTimeUpdate`
 
