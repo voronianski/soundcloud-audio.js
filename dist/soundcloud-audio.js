@@ -607,7 +607,7 @@ SoundCloud.prototype.load = function (url, callback) {
             this._track = data;
         }
 
-        this.duration = data.duration/1000;
+        this.duration = data.duration/1000; // convert to seconds
 
         callback(null, data);
     }.bind(this));
