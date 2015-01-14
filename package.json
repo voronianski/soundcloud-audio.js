@@ -2,13 +2,13 @@
   "name": "soundcloud-audio",
   "version": "0.1.0",
   "description": "Play SoundCloud tracks and playslists in modern browsers with HTML5 Audio API",
-  "main": "soundcloud.js",
+  "main": "index.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
-    "start": "watchify . -s SoundCloudAudio -o dist/sc.js -v -d",
-    "build": "browserify . -s SoundCloudAudio -o dist/sc.js",
+    "start": "watchify . -s SoundCloudAudio -o dist/soundcloud-audio.js -v -d",
+    "build": "browserify . -s SoundCloudAudio | uglifyjs -cm > dist/soundcloud-audio.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -26,7 +26,7 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^8.1.0",
-    "uglifyjs": "^2.3.6",
+    "uglify-js": "^2.4.16",
     "watchify": "^2.2.1"
   },
   "dependencies": {
