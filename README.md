@@ -61,7 +61,9 @@ scPlayer.load('https://soundcloud.com/dan-deacon/sets/feel-the-lightning-track-i
 
 #### `new SoundCloudAudio('YOUR_CLIENT_ID')`
 
-Create an instance of _SoundCloudAudio_, internally creates HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) prop. Client ID string is required, so get it here - https://developers.soundcloud.com.
+Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) property. 
+
+Client ID string is required, so get it here - https://developers.soundcloud.com.
 
 ### Methods
 
@@ -83,7 +85,7 @@ Create an instance of _SoundCloudAudio_, internally creates HTML5 `<audio>` elem
 
 #### `audio`
 
-Instance of raw `<audio>` element. There are several useful properties like `currentTime` (in `seconds`) or events you may want to listen with `addEventListener` (the full list of of them at [`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)).
+Instance of raw `<audio>` element. There are several useful properties like `currentTime` (in `seconds`) or [events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events) you may want to listen with `addEventListener` (the full list of of them at [`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)).
 
 #### `duration`
 
@@ -120,7 +122,7 @@ scPlayer.onAudioEnded = function () {
 ## Next Goals
 
 - Provide streaming options in order to integrate with [Waveform.js](http://waveformjs.org/)
-- Volume control
+- Volume control (?)
 
 ## License
 
