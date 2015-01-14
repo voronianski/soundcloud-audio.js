@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+    <div id="track">Loading..</div>
+
+    <script src="../dist/sc.js"></script>
+    <script>
+    (function (global) {
+        'use strict';
+
+        var $view = document.getElementById('track');
+        var player = global.player = new SoundCloudAudio('08f79801a998c381762ec5b15e4914d5');
+
+        var prettyTime = function (time) {
+            console.log(time);
+            var hours = Math.floor(time / 3600);
+            var mins = '0' + Math.floor((time % 3600) / 60);
+            var secs = '0' + Math.floor((time % 60));
+
+            mins = mins.substr(mins.length - 2);
+            secs = secs.substr(secs.length - 2);
+            if (!isNaN(secs)) {
+                if (hours) {
+                    return hours+':'+mins+':'+secs;
+                } else {
+                    return mins+':'+secs;
+                }
+            } else {
+                return '00:00';
+            }
+        };
+
+        var render = function (track) {
+            // track info
+            var $info = document.createElement('h3');
+            $info.innerText = 'Playing: '+track.user.username+' - '+ track.title+' - ';
+
+            // track timings
+            var $timer = document.createElement('span');
+            var renderTimer = function () {
+                $timer.innerText = prettyTime(player.currentTime)+'/'+prettyTime(player.duration);
+            }
+            renderTimer();
+            $info.appendChild($timer);
+
+            // rerender timer on every second
+            player.audio.addEventListener('timeupdate', function () {
+                renderTimer();
+            });
+
+            // album cover
+            var $img = document.createElement('img');
+            $img.src = track.artwork_url;
+
+            // play/pause button
+            var $button = document.createElement('button');
+            $button.innerHTML = 'Play';
+            $button.addEventListener('click', function () {
+                console.log(player.playing);
+                if (player.playing) {
+                    this.innerHTML = 'Play';
+                    player.pause();
+                } else {
+                    this.innerHTML = 'Pause';
+                    player.play();
+                }
+            });
+
+            // clean view
+            $view.removeChild($view.firstChild);
+
+            // append elements
+            $view.appendChild($info);
+            $view.appendChild($img);
+            $view.appendChild($button);
+        };
+
+        player.load('https://soundcloud.com/djangodjango/first-light', function (err, track) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            render(track);
+        });
+
+    })(this);
+    </script>
+</body>
+</html>
