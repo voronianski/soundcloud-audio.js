@@ -136,8 +136,7 @@ scPlayer.on('ended', function (audio) {
 
 ## Next Goals
 
-- Provide streaming options in order to integrate with [Waveform.js](http://waveformjs.org/)
-- Volume control (?)
+- Provide streaming options and mimic events in order to easily integrate with [Waveform.js](http://waveformjs.org/)
 
 ## License
 

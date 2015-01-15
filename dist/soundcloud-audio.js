@@ -594,7 +594,9 @@ SoundCloud.prototype.resolve = function (url, callback) {
 
     url = this._baseUrl+'/resolve.json?url='+url+'&client_id='+this._clientId;
 
-    jsonp(url, {prefix: 'jsonp_callback_'+Math.round(100000 * Math.random())}, function (err, data) {
+    jsonp(url, {
+        prefix: 'jsonp_callback_'+Math.round(100000 * Math.random())
+    }, function (err, data) {
         if (err) {
             callback(err);
         }
