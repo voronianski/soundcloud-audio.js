@@ -41,15 +41,15 @@
             // track timings
             var $timer = document.createElement('span');
             var renderTimer = function () {
+                console.log(player);
                 $timer.innerText = prettyTime(player.audio.currentTime)+'/'+prettyTime(player.duration);
             }
+            // rerender timer on every second
+            player.on('timeupdate', function () {
+                renderTimer();
+            });
             renderTimer();
             $info.appendChild($timer);
-
-            // rerender timer on every second
-            player.onTimeUpdate = function () {
-                renderTimer();
-            };
 
             // album cover
             var $img = document.createElement('img');
@@ -77,7 +77,7 @@
             $view.appendChild($button);
         };
 
-        player.load('https://soundcloud.com/djangodjango/first-light', function (err, track) {
+        player.resolve('https://soundcloud.com/djangodjango/first-light', function (err, track) {
             if (err) {
                 console.log(err);
                 return;

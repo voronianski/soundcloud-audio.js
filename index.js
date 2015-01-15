@@ -2,8 +2,6 @@
 
 var jsonp = require('jsonp');
 
-function noop () {}
-
 function SoundCloud (clientId) {
     if (!(this instanceof SoundCloud)) {
         return new SoundCloud(clientId);
@@ -20,11 +18,9 @@ function SoundCloud (clientId) {
     this.duration = 0;
 
     this.audio = document.createElement('audio');
-    this.audio.addEventListener('timeupdate', this.onTimeUpdate, false);
-    this.audio.addEventListener('ended', this.onAudioEnded, false);
 }
 
-SoundCloud.prototype.load = function (url, callback) {
+SoundCloud.prototype.resolve = function (url, callback) {
     if (!url) {
         throw new Error('SoundCloud track or playlist url is required');
     }
@@ -42,10 +38,18 @@ SoundCloud.prototype.load = function (url, callback) {
             this._track = data;
         }
 
-        this.duration = data.duration/1000; // convert to seconds
+        this.duration = data.duration / 1000; // convert to seconds
 
         callback(null, data);
     }.bind(this));
+};
+
+SoundCloud.prototype.on = function (e, callback) {
+    this.audio.addEventListener(e, callback, false);
+};
+
+SoundCloud.prototype.off = function (e, callback) {
+    this.audio.removeEventListener(e, callback);
 };
 
 SoundCloud.prototype.play = function (options) {
@@ -94,15 +98,6 @@ SoundCloud.prototype.seek = function (e) {
     var percent = e.offsetX / e.target.offsetWidth || (e.layerX - e.target.offsetLeft) / e.target.offsetWidth;
     var time = percent * this.audio.duration || 0;
     this.audio.currentTime = time;
-};
-
-SoundCloud.prototype.onTimeUpdate = noop;
-
-SoundCloud.prototype.onAudioEnded = noop;
-
-SoundCloud.prototype.destroy = function () {
-    this.audio.removeEventListener('timeupdate', this.onTimeUpdate);
-    this.audio.removeEventListener('ended', this.onAudioEnded);
 };
 
 module.exports = SoundCloud;

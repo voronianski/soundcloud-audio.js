@@ -19,13 +19,14 @@ bower install soundcloud-audio --save
 ```javascript
 var SoundCloudAudio = require('soundcloud-audio');
 
+// create new instance of audio
 var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
 // if you have an api stream url you can just play it like that
 scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
 
-// OR in other cases you need load TRACK and resolve it's data
-scPlayer.load('https://soundcloud.com/djangodjango/first-light', function (err, track) {
+// OR in other cases you need to load TRACK and resolve it's data
+scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (err, track) {
     // do smth with track object
     // e.g. display data in a view etc.
     console.log(track); 
@@ -37,11 +38,12 @@ scPlayer.load('https://soundcloud.com/djangodjango/first-light', function (err, 
     scPlayer.pause();
 });
 
-// OR load PLAYLIST and resolve it's data
-scPlayer.load('https://soundcloud.com/dan-deacon/sets/feel-the-lightning-track-instrumental-stems', function (err, playlist) {
-    // do smth with array of tracks or playlist's metadata
+// OR to load PLAYLIST and resolve it's data
+scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (err, playlist) {
+    // do smth with array of `playlist.tracks` or playlist's metadata
     // e.g. display playlist info in a view etc.
-    
+    console.log(playlist);
+
     // once playlist is loaded it can be played
     scPlayer.play();
 
@@ -67,25 +69,55 @@ Client ID string is required, so get it here - https://developers.soundcloud.com
 
 ### Methods
 
-#### `load('url', callback)`
+#### `resolve('url', callback)`
+
+If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/185533328/stream`) or you need track's metadata to show then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as a second argument.
+
+This method rely on small [jsonp](https://www.npmjs.com/package/jsonp) solution in order to make API requests.
 
 #### `play([options])`
 
+Starts playing track if it's not playing right now. Accepts `options` object where all fields are completely optional:
+
+- `streamUrl` - SoundCloud API `stream_url` string, if it's passed will be the main source from where to play audio.
+- `playlistIndex` - number that specifies position of the track to play in resolved playlist `tracks` array.
+
 #### `pause()`
+
+Pause playing audio.
 
 #### `next()`
 
+Skip to the next track in playlist to play.
+
 #### `previous()`
 
-#### `seek()`
+Return to the previous track in playlist.
 
-#### `destroy()`
+#### `seek(event)`
+
+Helper method for integrating HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) or polyfills for changing `audio.currentTime`.
 
 ### Props
 
 #### `audio`
 
 Instance of raw `<audio>` element. There are several useful properties like `currentTime` (in `seconds`) or [events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events) you may want to listen with `addEventListener` (the full list of of them at [`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)).
+
+```javascript
+var SoundCloudAudio = require('soundcloud-audio');
+
+var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
+
+// you have access to raw audio element API
+console.log(scPlayer.audio); 
+
+// e.g. subscribe for specific events
+var handler = function () {};
+scPlayer.audio.addEventListener('playing' handler);
+// but don't forget to unsubscribe
+scPlayer.audio.removeEventListner('playing', handler);
+```
 
 #### `duration`
 
@@ -95,15 +127,12 @@ SoundCloud track duration converted into `seconds` in order to be in sync with `
 
 Shows the current state of the player, returns `false` or source of a currently streaming track.
 
-### Events Handlers
+### Events
 
-_SoundCloudAudio_ starts to listen on 2 events when it's initialized - `timeupdate` and `ended`. Use these native handlers and override them for your use cases, instance of `audio`  is passed as argument. 
+_SoundCloudAudio_ provides shortcuts to subscribe or unsubscribe handler functions on native `audio` events. The list of supported events can be accessed here - https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events.
 
-Listeners will be removed when _SoundCloudAudio_ is [destroy](https://github.com/voronianski/soundcloud-audio.js#destroy)ed.
-
-#### `onTimeUpdate`
-
-#### `onAudioEnded`
+#### `on('event', handler)`
+#### `off('event', handler)`
 
 ```javascript
 var SoundCloudAudio = require('soundcloud-audio');
@@ -111,12 +140,12 @@ var SoundCloudAudio = require('soundcloud-audio');
 var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
 scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
-scPlayer.onTimeUpdate = function (audio) {
+scPlayer.on('timeupdate', function (audio) {
     console.log(audio.currentTime);
-};
-scPlayer.onAudioEnded = function () {
+});
+scPlayer.on('ended', function () {
     console.log(scPlayer.track.title + ' just ended!');
-};
+});
 ```
 
 ## Next Goals
