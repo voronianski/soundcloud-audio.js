@@ -585,11 +585,9 @@ function SoundCloud (clientId) {
     this.duration = 0;
 
     this.audio = document.createElement('audio');
-    this.audio.addEventListener('timeupdate', this._onTimeUpdate, false);
-    this.audio.addEventListener('ended', this._onAudioEnded, false);
 }
 
-SoundCloud.prototype.load = function (url, callback) {
+SoundCloud.prototype.resolve = function (url, callback) {
     if (!url) {
         throw new Error('SoundCloud track or playlist url is required');
     }
@@ -607,10 +605,18 @@ SoundCloud.prototype.load = function (url, callback) {
             this._track = data;
         }
 
-        this.duration = data.duration/1000; // convert to seconds
+        this.duration = data.duration / 1000; // convert to seconds
 
         callback(null, data);
     }.bind(this));
+};
+
+SoundCloud.prototype.on = function (e, callback) {
+    this.audio.addEventListener(e, callback, false);
+};
+
+SoundCloud.prototype.off = function (e, callback) {
+    this.audio.removeEventListener(e, callback);
 };
 
 SoundCloud.prototype.play = function (options) {
@@ -657,22 +663,7 @@ SoundCloud.prototype.seek = function (e) {
         return false;
     }
     var percent = e.offsetX / e.target.offsetWidth || (e.layerX - e.target.offsetLeft) / e.target.offsetWidth;
-    var time = percent * this.audio.duration || 0;
-    this.audio.currentTime = time;
-};
-
-SoundCloud.prototype._onTimeUpdate = function () {
-    console.log(this);
-    this.currentTime = this.audio.currentTime;
-};
-
-SoundCloud.prototype._onAudioEnded = function () {
-
-};
-
-SoundCloud.prototype.destroy = function () {
-    this.audio.removeEventListener('timeupdate', this._onTimeUpdate);
-    this.audio.removeEventListener('ended', this._onAudioEnded);
+    this.audio.currentTime = percent * (this.audio.duration || 0);
 };
 
 module.exports = SoundCloud;

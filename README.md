@@ -73,14 +73,14 @@ Client ID string is required, so get it here - https://developers.soundcloud.com
 
 If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/185533328/stream`) or you need track's metadata to show then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as a second argument.
 
-This method rely on small [jsonp](https://www.npmjs.com/package/jsonp) solution in order to make API requests.
+This method rely on a small [jsonp](https://www.npmjs.com/package/jsonp) solution in order to make API requests.
 
 #### `play([options])`
 
 Starts playing track if it's not playing right now. Accepts `options` object where all fields are completely optional:
 
-- `streamUrl` - SoundCloud API `stream_url` string, if it's passed will be the main source from where to play audio.
-- `playlistIndex` - number that specifies position of the track to play in resolved playlist `tracks` array.
+- `streamUrl` - SoundCloud API `stream_url` string, if it's passed it will be the main source from where to play audio.
+- `playlistIndex` - number that specifies the position of the track to play in resolved playlist `tracks` array.
 
 #### `pause()`
 
@@ -96,7 +96,7 @@ Return to the previous track in playlist.
 
 #### `seek(event)`
 
-Helper method for integrating HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) or polyfills for changing `audio.currentTime`.
+Helper method for integrating HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) and [polyfills](https://github.com/LeaVerou/HTML5-Progress-polyfill) for changing playback position. Just pass the DOM event as the only argument and all necessary computations will be done automagically.
 
 ### Props
 
@@ -132,6 +132,7 @@ Shows the current state of the player, returns `false` or source of a currently 
 _SoundCloudAudio_ provides shortcuts to subscribe or unsubscribe handler functions on native `audio` events. The list of supported events can be accessed here - https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events.
 
 #### `on('event', handler)`
+
 #### `off('event', handler)`
 
 ```javascript

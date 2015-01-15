@@ -27,7 +27,9 @@ SoundCloud.prototype.resolve = function (url, callback) {
 
     url = this._baseUrl+'/resolve.json?url='+url+'&client_id='+this._clientId;
 
-    jsonp(url, {prefix: 'jsonp_callback_'+Math.round(100000 * Math.random())}, function (err, data) {
+    jsonp(url, {
+        prefix: 'jsonp_callback_'+Math.round(100000 * Math.random())
+    }, function (err, data) {
         if (err) {
             callback(err);
         }
@@ -96,8 +98,7 @@ SoundCloud.prototype.seek = function (e) {
         return false;
     }
     var percent = e.offsetX / e.target.offsetWidth || (e.layerX - e.target.offsetLeft) / e.target.offsetWidth;
-    var time = percent * this.audio.duration || 0;
-    this.audio.currentTime = time;
+    this.audio.currentTime = percent * (this.audio.duration || 0);
 };
 
 module.exports = SoundCloud;
