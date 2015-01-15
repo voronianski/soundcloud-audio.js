@@ -71,7 +71,7 @@ Client ID string is required, so get it here - https://developers.soundcloud.com
 
 #### `resolve('url', callback)`
 
-If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/185533328/stream`) or you need track's metadata to show then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as a second argument.
+If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/185533328/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as a second argument.
 
 This method rely on a small [jsonp](https://www.npmjs.com/package/jsonp) solution in order to make API requests.
 
@@ -133,6 +133,12 @@ scPlayer.on('ended', function (audio) {
     console.log(scPlayer.track.title + ' just ended!');
 });
 ```
+
+## Browser Support
+
+![Chrome](https://raw.github.com/alrra/browser-logos/master/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/firefox/firefox_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/internet-explorer/internet-explorer_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/opera/opera_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/safari/safari_48x48.png)
+--- | --- | --- | --- | --- |
+3+ ✔ | 3.5+ ✔ | 9+ ✔ | 10+ ✔ | 3.1+ ✔ |
 
 ## Next Goals
 
