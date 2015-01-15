@@ -104,21 +104,6 @@ Helper method for integrating HTML [`<progress>`](http://caniuse.com/#feat=progr
 
 Instance of raw `<audio>` element. There are several useful properties like `currentTime` (in `seconds`) or [events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events) you may want to listen with `addEventListener` (the full list of of them at [`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)).
 
-```javascript
-var SoundCloudAudio = require('soundcloud-audio');
-
-var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
-
-// you have access to raw audio element API
-console.log(scPlayer.audio); 
-
-// e.g. subscribe for specific events
-var handler = function () {};
-scPlayer.audio.addEventListener('playing' handler);
-// but don't forget to unsubscribe
-scPlayer.audio.removeEventListner('playing', handler);
-```
-
 #### `duration`
 
 SoundCloud track duration converted into `seconds` in order to be in sync with `audio.currentTime`.
@@ -144,7 +129,7 @@ scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'})
 scPlayer.on('timeupdate', function (audio) {
     console.log(audio.currentTime);
 });
-scPlayer.on('ended', function () {
+scPlayer.on('ended', function (audio) {
     console.log(scPlayer.track.title + ' just ended!');
 });
 ```
