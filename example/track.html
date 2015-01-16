@@ -41,7 +41,6 @@
             // track timings
             var $timer = document.createElement('span');
             var renderTimer = function () {
-                console.log(player);
                 $timer.innerText = prettyTime(player.audio.currentTime)+'/'+prettyTime(player.duration);
             }
             // rerender timer on every second
@@ -77,11 +76,7 @@
             $view.appendChild($button);
         };
 
-        player.resolve('https://soundcloud.com/djangodjango/first-light', function (err, track) {
-            if (err) {
-                console.log(err);
-                return;
-            }
+        player.resolve('https://soundcloud.com/djangodjango/first-light', function (track) {
             render(track);
         });
 

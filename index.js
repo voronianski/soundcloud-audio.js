@@ -1,7 +1,5 @@
 'use strict';
 
-var jsonp = require('jsonp');
-
 function SoundCloud (clientId) {
     if (!(this instanceof SoundCloud)) {
         return new SoundCloud(clientId);
@@ -27,23 +25,33 @@ SoundCloud.prototype.resolve = function (url, callback) {
 
     url = this._baseUrl+'/resolve.json?url='+url+'&client_id='+this._clientId;
 
-    jsonp(url, {
-        prefix: 'jsonp_callback_'+Math.round(100000 * Math.random())
-    }, function (err, data) {
-        if (err) {
-            callback(err);
-        }
-
+    this._jsonp(url, function (data) {
         if (data.tracks) {
             this._playlist = data;
         } else {
             this._track = data;
         }
 
-        this.duration = data.duration / 1000; // convert to seconds
-
-        callback(null, data);
+        this.duration = data.duration/1000; // convert to seconds
+        callback(data);
     }.bind(this));
+};
+
+SoundCloud.prototype._jsonp = function (url, callback) {
+    var target = document.getElementsByTagName('script')[0] || document.head;
+    var script = document.createElement('script');
+
+    var id = 'jsonp_callback_'+Math.round(100000*Math.random());
+    window[id] = function (data) {
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
+        window[id] = function () {};
+        callback(data);
+    };
+
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + id;
+    target.parentNode.insertBefore(script, target);
 };
 
 SoundCloud.prototype.on = function (e, callback) {
@@ -60,8 +68,18 @@ SoundCloud.prototype.play = function (options) {
 
     if (options.streamUrl) {
         src = options.streamUrl;
-    } else if (this._playlist && this._playlist.tracks.length) {
-        src = this._playlist.tracks[(options.playlistIndex || 0)].stream_url;
+    } else if (this._playlist) {
+        var length = this._playlist.tracks.length;
+        if (length) {
+            this._playlistIndex = options.playlistIndex || 0;
+
+            // silently stop if index is out of range
+            if (this._playlistIndex >= length || this._playlistIndex < 0) {
+                this._playlistIndex = 0;
+                return;
+            }
+            src = this._playlist.tracks[this._playlistIndex].stream_url;
+        }
     } else if (this._track) {
         src = this._track.stream_url;
     }
@@ -86,11 +104,15 @@ SoundCloud.prototype.pause = function () {
 };
 
 SoundCloud.prototype.next = function () {
-
+    if (this._playlist && this._playlist.tracks.length) {
+        this.play({playlistIndex: ++this._playlistIndex});
+    }
 };
 
 SoundCloud.prototype.previous = function () {
-
+    if (this._playlist && this._playlist.tracks.length) {
+        this.play({playlistIndex: --this._playlistIndex});
+    }
 };
 
 SoundCloud.prototype.seek = function (e) {

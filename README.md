@@ -96,7 +96,7 @@ Return to the previous track in playlist.
 
 #### `seek(event)`
 
-Helper method for integrating HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) and [polyfills](https://github.com/LeaVerou/HTML5-Progress-polyfill) for changing playback position. Just pass the DOM event as the only argument and all necessary computations will be done automagically.
+Helper method for integrating with HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) element and its' [polyfills](https://github.com/LeaVerou/HTML5-Progress-polyfill). Changes playback position, just pass the DOM event as the only argument and all necessary computations will be done automagically.
 
 ### Props
 
