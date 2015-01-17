@@ -1,5 +1,4 @@
 var CLIENT_ID = '08f79801a998c381762ec5b15e4914d5';
-var TRACK = 'https://soundcloud.com/djangodjango/first-light';
 var PLAYLIST = 'http://soundcloud.com/jxnblk/sets/yello';
 
 describe('soundcloud-audio', function () {
@@ -56,6 +55,27 @@ describe('soundcloud-audio', function () {
                 it('should have second track playing', function () {
                     expect(player.playing).toMatch(secondTrack);
                 });
+
+                describe('when skipping to previous track', function () {
+                    beforeEach(function () {
+                        player.previous();
+                    });
+
+                    it('should have first track playing', function () {
+                        expect(player.playing).toMatch(firstTrack);
+                    });
+
+                    describe('when pausing the track', function () {
+                        beforeEach(function () {
+                            player.pause();
+                        });
+
+                        it('should have first track playing', function () {
+                            expect(player.playing).toBeFalsy();
+                        });
+                    });
+                });
+
             });
         });
     });

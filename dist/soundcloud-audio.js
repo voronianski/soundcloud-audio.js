@@ -74,7 +74,7 @@ SoundCloud.prototype.play = function (options) {
         if (length) {
             this._playlistIndex = options.playlistIndex || 0;
 
-            // silently stop if index is out of range
+            // be silent if index is out of range
             if (this._playlistIndex >= length || this._playlistIndex < 0) {
                 this._playlistIndex = 0;
                 return;

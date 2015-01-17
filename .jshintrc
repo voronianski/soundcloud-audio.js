@@ -9,7 +9,8 @@
         "it",
         "jest",
         "xit",
-        "xdescribe"
+        "xdescribe",
+        "SoundCloudAudio"
     ],
 
     "asi" : false,

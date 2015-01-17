@@ -8,11 +8,11 @@
 npm install soundcloud-audio --save
 ```
 
-or
+<!-- or
 
 ```bash
 bower install soundcloud-audio --save
-```
+``` -->
 
 ## Usage
 
