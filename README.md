@@ -1,5 +1,7 @@
 # <img src="http://www.officialpsds.com/images/thumbs/Soundcloud-Logo-psd47614.png" width="75" align="left">&nbsp;soundcloud-audio.js
 
+[![build status](http://img.shields.io/travis/voronianski/soundcloud-audio.js.svg?style=flat)](https://travis-ci.org/voronianski/soundcloud-audio.js)
+
 > Wrapper around [HTML5 `<audio>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/audio) and SoundCloud [tracks](https://developers.soundcloud.com/docs/api/reference#tracks) and [playlists](https://developers.soundcloud.com/docs/api/reference#playlists) APIs. It could be treated as small replacement for official [SoundCloud SDK](https://developers.soundcloud.com/docs/api/sdks#javascript).
 
 ## Install
