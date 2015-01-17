@@ -73,9 +73,7 @@ Client ID string is required, so get it here - https://developers.soundcloud.com
 
 #### `resolve('url', callback)`
 
-If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/185533328/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as a second argument.
-
-This method rely on a small [jsonp](https://www.npmjs.com/package/jsonp) solution in order to make API requests.
+If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/:id/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as the only argument.
 
 #### `play([options])`
 
