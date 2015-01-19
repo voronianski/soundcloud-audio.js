@@ -142,6 +142,7 @@ scPlayer.on('ended', function (audio) {
 
 ## Next Goals
 
+- Add more methods of SoundCloud API (like `getTrackById` etc.)
 - Provide streaming options and mimic events in order to easily integrate with [Waveform.js](http://waveformjs.org/)
 
 ## License
