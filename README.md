@@ -51,9 +51,9 @@ scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (err, playl
 
     // for playlists it's possible to switch to another track in queue
     // e.g. we do it here when playing track is finished 
-    scPlayer.onAudioEnded = function () {
+    scPlayer.on('ended', function () {
         scPlayer.next();
-    };
+    });
 
     // play specific track from playlist by it's index
     scPlayer.play({playlistIndex: 2});
