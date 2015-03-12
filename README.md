@@ -82,6 +82,10 @@ Starts playing track if it's not playing right now. Accepts `options` object whe
 - `streamUrl` - SoundCloud API `stream_url` string, if it's passed it will be the main source from where to play audio.
 - `playlistIndex` - number that specifies the position of the track to play in resolved playlist `tracks` array.
 
+#### `preload(streamUrl)`
+
+Preloads track data without playing it.
+
 #### `pause()`
 
 Pause playing audio.
@@ -119,6 +123,8 @@ _SoundCloudAudio_ provides shortcuts to subscribe or unsubscribe handler functio
 #### `on('event', handler)`
 
 #### `off('event', handler)`
+
+#### `unbindAll()`
 
 ```javascript
 var SoundCloudAudio = require('soundcloud-audio');

@@ -9,6 +9,8 @@ function SoundCloud (clientId) {
         throw new Error('SoundCloud API clientId is required, get it - https://developers.soundcloud.com/');
     }
 
+    this._events = {};
+
     this._clientId = clientId;
     this._baseUrl = 'http://api.soundcloud.com';
 
@@ -54,12 +56,28 @@ SoundCloud.prototype._jsonp = function (url, callback) {
     target.parentNode.insertBefore(script, target);
 };
 
-SoundCloud.prototype.on = function (e, callback) {
-    this.audio.addEventListener(e, callback, false);
+SoundCloud.prototype.on = function (e, fn) {
+    this._events[e] = fn;
+    this.audio.addEventListener(e, fn, false);
 };
 
-SoundCloud.prototype.off = function (e, callback) {
-    this.audio.removeEventListener(e, callback);
+SoundCloud.prototype.off = function (e, fn) {
+    this._events[e] = null;
+    this.audio.removeEventListener(e, fn);
+};
+
+SoundCloud.prototype.unbindAll = function () {
+    for (var e in this._events) {
+        var fn = this._events[e];
+        if (fn) {
+            this.off(e, fn);
+        }
+    }
+};
+
+SoundCloud.prototype.preload = function (streamUrl) {
+    this._track = {stream_url: streamUrl};
+    this.audio.src = streamUrl+'?client_id='+this._clientId;
 };
 
 SoundCloud.prototype.play = function (options) {
