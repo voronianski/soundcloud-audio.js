@@ -90,6 +90,10 @@ Preloads track data without playing it.
 
 Pause playing audio.
 
+#### `stop()`
+
+Stop playing audio and rewind it to start.
+
 #### `next()`
 
 Skip to the next track in playlist to play.

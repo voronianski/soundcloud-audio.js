@@ -121,6 +121,12 @@ SoundCloud.prototype.pause = function () {
     this.playing = false;
 };
 
+SoundCloud.prototype.stop = function () {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.playing = false;
+};
+
 SoundCloud.prototype.next = function () {
     if (this._playlist && this._playlist.tracks.length) {
         this.play({playlistIndex: ++this._playlistIndex});
