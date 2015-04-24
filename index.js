@@ -128,12 +128,19 @@ SoundCloud.prototype.stop = function () {
 };
 
 SoundCloud.prototype.next = function () {
-    if (this._playlist && this._playlist.tracks.length) {
+    var tracksLength = this._playlist.tracks.length;
+    if (this._playlistIndex >= tracksLength-1) {
+        return;
+    }
+    if (this._playlist && tracksLength) {
         this.play({playlistIndex: ++this._playlistIndex});
     }
 };
 
 SoundCloud.prototype.previous = function () {
+    if (this._playlistIndex <= 0) {
+        return;
+    }
     if (this._playlist && this._playlist.tracks.length) {
         this.play({playlistIndex: --this._playlistIndex});
     }
