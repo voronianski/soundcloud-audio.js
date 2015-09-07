@@ -12,7 +12,7 @@ function SoundCloud (clientId) {
     this._events = {};
 
     this._clientId = clientId;
-    this._baseUrl = 'http://api.soundcloud.com';
+    this._baseUrl = 'https://api.soundcloud.com';
 
     this.playing = false;
     this.duration = 0;
