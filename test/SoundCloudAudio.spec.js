@@ -35,7 +35,7 @@ describe('soundcloud-audio', function () {
         });
 
         it('should have playlist duration in seconds', function () {
-            expect(typeof(player.duration)).toBe('number');
+            expect(typeof player.duration).toBe('number');
         });
 
         describe('when playing playlist', function () {

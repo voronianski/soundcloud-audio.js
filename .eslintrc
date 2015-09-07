@@ -17,5 +17,9 @@
     "no-empty": 0,
     "no-use-before-define": 0,
     "camelcase": 0
+  },
+  "globals": {
+    "expect": true,
+    "SoundCloudAudio": true
   }
 }
