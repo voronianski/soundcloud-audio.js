@@ -79,4 +79,8 @@ describe('soundcloud-audio', function () {
             });
         });
     });
+
+    describe('when resolving artist tracks', function () {
+
+    });
 });
