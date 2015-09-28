@@ -24,9 +24,9 @@
             secs = secs.substr(secs.length - 2);
             if (!isNaN(secs)) {
                 if (hours) {
-                    return hours+':'+mins+':'+secs;
+                    return hours + ':' + mins + ':' + secs;
                 } else {
-                    return mins+':'+secs;
+                    return mins + ':' + secs;
                 }
             } else {
                 return '00:00';
@@ -36,13 +36,13 @@
         var render = function (track) {
             // track info
             var $info = document.createElement('h3');
-            $info.innerText = 'Playing: '+track.user.username+' - '+ track.title+' - ';
+            $info.innerText = 'Playing: ' + track.user.username + ' - ' + track.title + ' - ';
 
             // track timings
             var $timer = document.createElement('span');
             var renderTimer = function () {
-                $timer.innerText = prettyTime(player.audio.currentTime)+'/'+prettyTime(player.duration);
-            }
+                $timer.innerText = prettyTime(player.audio.currentTime) + '/' + prettyTime(player.duration);
+            };
             // rerender timer on every second
             player.on('timeupdate', renderTimer);
             renderTimer();
@@ -77,10 +77,7 @@
             $view.appendChild($button);
         };
 
-        player.resolve('https://soundcloud.com/djangodjango/first-light', function (track) {
-            render(track);
-        });
-
+        player.resolve('https://soundcloud.com/djangodjango/first-light', render);
     })(this);
     </script>
 </body>
