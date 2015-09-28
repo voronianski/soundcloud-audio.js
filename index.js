@@ -38,7 +38,10 @@ SoundCloud.prototype.resolve = function (url, callback) {
             this._track = data;
         }
 
-        this.duration = data.duration / 1000; // convert to seconds
+        this.duration = data.duration && !isNaN(data.duration) ?
+            data.duration / 1000 : // convert to seconds
+            0; // no duration is zero
+
         callback(data);
     }.bind(this));
 };

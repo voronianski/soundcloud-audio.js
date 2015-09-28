@@ -26,16 +26,23 @@ SoundCloud.prototype.resolve = function (url, callback) {
         throw new Error('SoundCloud track or playlist url is required');
     }
 
-    url = this._baseUrl+'/resolve.json?url='+url+'&client_id='+this._clientId;
+    url = this._baseUrl + '/resolve.json?url=' + url + '&client_id=' + this._clientId;
 
     this._jsonp(url, function (data) {
-        if (data.tracks) {
+        if (Array.isArray(data)) {
+            var tracks = data;
+            data = {tracks: tracks};
+            this._playlist = data;
+        } else if (data.tracks) {
             this._playlist = data;
         } else {
             this._track = data;
         }
 
-        this.duration = data.duration/1000; // convert to seconds
+        this.duration = data.duration && !isNaN(data.duration) ?
+            data.duration / 1000 : // convert to seconds
+            0; // no duration is zero
+
         callback(data);
     }.bind(this));
 };
@@ -44,7 +51,7 @@ SoundCloud.prototype._jsonp = function (url, callback) {
     var target = document.getElementsByTagName('script')[0] || document.head;
     var script = document.createElement('script');
 
-    var id = 'jsonp_callback_'+Math.round(100000*Math.random());
+    var id = 'jsonp_callback_' + Math.round(100000 * Math.random());
     window[id] = function (data) {
         if (script.parentNode) {
             script.parentNode.removeChild(script);
@@ -78,7 +85,7 @@ SoundCloud.prototype.unbindAll = function () {
 
 SoundCloud.prototype.preload = function (streamUrl) {
     this._track = {stream_url: streamUrl};
-    this.audio.src = streamUrl+'?client_id='+this._clientId;
+    this.audio.src = streamUrl + '?client_id=' + this._clientId;
 };
 
 SoundCloud.prototype.play = function (options) {
@@ -107,7 +114,7 @@ SoundCloud.prototype.play = function (options) {
         throw new Error('There is no tracks to play, use `streamUrl` option or `load` method');
     }
 
-    src += '?client_id='+this._clientId;
+    src += '?client_id=' + this._clientId;
 
     if (src !== this.audio.src) {
         this.audio.src = src;
@@ -130,7 +137,7 @@ SoundCloud.prototype.stop = function () {
 
 SoundCloud.prototype.next = function () {
     var tracksLength = this._playlist.tracks.length;
-    if (this._playlistIndex >= tracksLength-1) {
+    if (this._playlistIndex >= tracksLength - 1) {
         return;
     }
     if (this._playlist && tracksLength) {
