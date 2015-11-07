@@ -20,6 +20,13 @@ function SoundCloud (clientId) {
     this.audio = document.createElement('audio');
 }
 
+SoundCloud.prototype.appendQueryParam = function(url, param, value) {
+    var regex = /\?(?:.*)$/;
+    var chr = regex.test(url) ? '&' : '?';
+
+    return url + chr + param + '=' + value;
+};
+
 SoundCloud.prototype.resolve = function (url, callback) {
     if (!url) {
         throw new Error('SoundCloud track or playlist url is required');
@@ -113,7 +120,7 @@ SoundCloud.prototype.play = function (options) {
         throw new Error('There is no tracks to play, use `streamUrl` option or `load` method');
     }
 
-    src += '?client_id=' + this._clientId;
+    src = this.appendQueryParam(src, 'client_id', this._clientId);
 
     if (src !== this.audio.src) {
         this.audio.src = src;
