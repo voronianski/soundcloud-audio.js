@@ -32,7 +32,7 @@ SoundCloud.prototype.resolve = function (url, callback) {
         throw new Error('SoundCloud track or playlist url is required');
     }
 
-    url = this._baseUrl + '/resolve.json?url=' + url + '&client_id=' + this._clientId;
+    url = this._baseUrl + '/resolve.json?url=' + encodeURIComponent(url) + '&client_id=' + this._clientId;
 
     this._jsonp(url, function (data) {
         if (Array.isArray(data)) {
@@ -66,7 +66,7 @@ SoundCloud.prototype._jsonp = function (url, callback) {
         callback(data);
     };
 
-    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + id;
+    script.src = this.appendQueryParam(url, 'callback', id);
     target.parentNode.insertBefore(script, target);
 };
 
@@ -91,7 +91,7 @@ SoundCloud.prototype.unbindAll = function () {
 
 SoundCloud.prototype.preload = function (streamUrl) {
     this._track = {stream_url: streamUrl};
-    this.audio.src = streamUrl + '?client_id=' + this._clientId;
+    this.audio.src = this.appendQueryParam(streamUrl, 'client_id', this._clientId);
 };
 
 SoundCloud.prototype.play = function (options) {
