@@ -2,6 +2,8 @@ var CLIENT_ID = '08f79801a998c381762ec5b15e4914d5';
 var PLAYLIST = 'http://soundcloud.com/jxnblk/sets/yello';
 var TRACKS = 'http://soundcloud.com/crystal-castles/tracks';
 var SECRET_TRACK = 'https://api.soundcloud.com/tracks/12345/stream?secret_token=s-ZUFsV';
+var STREAM_WITH_TIME = 'https://api.soundcloud.com/tracks/242594586/stream#t=13:10';
+var TRACK_WITH_TIME = 'https://soundcloud.com/balamii/dj-sotofett-b2b-brian-not-brian-jayda-g-jan-2016#t=13:10';
 
 describe('soundcloud-audio', function () {
     var player;
@@ -148,15 +150,41 @@ describe('soundcloud-audio', function () {
         });
     });
 
-    describe('when resolving secret tracks', function() {
-
-        before(function() {
+    describe('when streaming secret tracks', function () {
+        before(function () {
             player.play({ streamUrl: SECRET_TRACK });
         });
 
-        it('should have playing defined as the correct url', function() {
+        it('should have playing defined as the correct url', function () {
             var expected = SECRET_TRACK + '&client_id=' + CLIENT_ID;
             expect(player.playing).to.equal(expected);
+        });
+    });
+
+    describe('when streaming track with time hash', function () {
+        before(function () {
+            player.play({ streamUrl: STREAM_WITH_TIME });
+        });
+
+        it('should have playing defined as the correct url', function () {
+            var parts = STREAM_WITH_TIME.split('#');
+            var expected = parts[0] + '?client_id=' + CLIENT_ID + '#' + parts[1];
+            expect(player.playing).to.equal(expected);
+        });
+
+        describe('when resolving track with time hash', function () {
+            before(function (done) {
+                player.resolve(TRACK_WITH_TIME, function () {
+                    player.play();
+                    done();
+                });
+            });
+
+            it('should have playing defined as the correct url', function () {
+                var parts = STREAM_WITH_TIME.split('#');
+                var expected = parts[0] + '?client_id=' + CLIENT_ID + '#' + parts[1];
+                expect(player.playing).to.equal(expected);
+            });
         });
     });
 });
