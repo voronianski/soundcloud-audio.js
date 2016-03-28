@@ -30,7 +30,7 @@ var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
 
 // OR in other cases you need to load TRACK and resolve it's data
-scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (err, track) {
+scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (track) {
     // do smth with track object
     // e.g. display data in a view etc.
     console.log(track); 
@@ -43,7 +43,7 @@ scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (er
 });
 
 // OR to load PLAYLIST and resolve it's data
-scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (err, playlist) {
+scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (playlist) {
     // do smth with array of `playlist.tracks` or playlist's metadata
     // e.g. display playlist info in a view etc.
     console.log(playlist);
@@ -75,7 +75,7 @@ Client ID string is required, so get it here - https://developers.soundcloud.com
 
 #### `resolve('url', callback)`
 
-If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/:id/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback function will receive it as plain object as the only argument.
+If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/:id/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback **function will receive it as plain object as the only argument**.
 
 #### `play([options])`
 
@@ -138,10 +138,10 @@ var SoundCloudAudio = require('soundcloud-audio');
 var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
 scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
-scPlayer.on('timeupdate', function (audio) {
-    console.log(audio.currentTime);
+scPlayer.on('timeupdate', function () {
+    console.log(scPlayer.audio.currentTime);
 });
-scPlayer.on('ended', function (audio) {
+scPlayer.on('ended', function () {
     console.log(scPlayer.track.title + ' just ended!');
 });
 ```
