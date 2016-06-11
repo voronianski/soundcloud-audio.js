@@ -79,7 +79,7 @@ SoundCloud.prototype._jsonp = function (url, callback) {
     var target = document.getElementsByTagName('script')[0] || document.head;
     var script = document.createElement('script');
 
-    var id = 'jsonp_callback_' + (new Date()).valueOf()+Math.floor(Math.random()*1000);
+    var id = 'jsonp_callback_' + (new Date()).valueOf();
     window[id] = function (data) {
         if (script.parentNode) {
             script.parentNode.removeChild(script);
