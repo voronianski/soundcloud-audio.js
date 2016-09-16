@@ -20,7 +20,7 @@ function _appendQueryParam (url, param, value) {
     var U = _parseURL(url);
     var regex = /\?(?:.*)$/;
     var chr = regex.test(U.search) ? '&' : '?';
-    var result = U.protocol + '//' +  U.host + U.port + U.pathname + U.search + chr + param + '=' + value + U.hash;
+    var result = U.protocol + '//' +  U.host + U.pathname + U.search + chr + param + '=' + value + U.hash;
     return result;
 }
 
