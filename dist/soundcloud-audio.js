@@ -1,4 +1,4 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var o;"undefined"!=typeof window?o=window:"undefined"!=typeof global?o=global:"undefined"!=typeof self&&(o=self),o.SoundCloudAudio=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/dmitri/github/soundcloud-html5-audio":[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.SoundCloudAudio = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 var anchor;
@@ -50,7 +50,7 @@ SoundCloud.prototype.resolve = function (url, callback) {
     }
 
     var resolveUrl = this._baseUrl + '/resolve.json?url=' + encodeURIComponent(url) + '&client_id=' + this._clientId;
-    this._jsonp(resolveUrl, function (data) {
+    this._json(resolveUrl, function (data) {
         this.cleanData();
 
         if (Array.isArray(data)) {
@@ -75,6 +75,7 @@ SoundCloud.prototype.resolve = function (url, callback) {
     }.bind(this));
 };
 
+// deprecated
 SoundCloud.prototype._jsonp = function (url, callback) {
     var target = document.getElementsByTagName('script')[0] || document.head;
     var script = document.createElement('script');
@@ -90,6 +91,25 @@ SoundCloud.prototype._jsonp = function (url, callback) {
 
     script.src = _appendQueryParam(url, 'callback', id);
     target.parentNode.insertBefore(script, target);
+};
+
+SoundCloud.prototype._json = function (url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var resp = {};
+        try {
+            resp = JSON.parse(xhr.responseText);
+        } catch (err) {
+            // fail silently
+        }
+        callback(resp);
+      }
+    }
+  };
+  xhr.send(null);
 };
 
 SoundCloud.prototype.on = function (e, fn) {
@@ -197,5 +217,5 @@ SoundCloud.prototype.cleanData = function () {
 
 module.exports = SoundCloud;
 
-},{}]},{},["/Users/dmitri/github/soundcloud-html5-audio"])("/Users/dmitri/github/soundcloud-html5-audio")
+},{}]},{},[1])(1)
 });

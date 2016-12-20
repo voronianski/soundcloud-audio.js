@@ -74,21 +74,41 @@ SoundCloud.prototype.resolve = function (url, callback) {
     }.bind(this));
 };
 
+// deprecated
+SoundCloud.prototype._jsonp = function (url, callback) {
+    var target = document.getElementsByTagName('script')[0] || document.head;
+    var script = document.createElement('script');
+
+    var id = 'jsonp_callback_' + (new Date()).valueOf() + Math.floor(Math.random() * 1000);
+    window[id] = function (data) {
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
+        window[id] = function () {};
+        callback(data);
+    };
+
+    script.src = _appendQueryParam(url, 'callback', id);
+    target.parentNode.insertBefore(script, target);
+};
+
 SoundCloud.prototype._json = function (url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url);
-  xhr.send(null);
   xhr.onreadystatechange = function () {
-    var DONE = 4; // readyState 4 means the request is done.
-    var OK = 200; // status 200 is a successful return.
-    if (xhr.readyState === DONE) {
-      if (xhr.status === OK) {
-        callback(JSON.parse(xhr.responseText)); 
-      } else {
-        console.log('Error: ' + xhr.status); // An error occurred during the request.
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var resp = {};
+        try {
+            resp = JSON.parse(xhr.responseText);
+        } catch (err) {
+            // fail silently
+        }
+        callback(resp);
       }
     }
   };
+  xhr.send(null);
 };
 
 SoundCloud.prototype.on = function (e, fn) {
