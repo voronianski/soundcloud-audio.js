@@ -83,6 +83,7 @@ describe('soundcloud-audio', function () {
         });
     });
 
+    // SoundCloud is not supporting resolving track urls
     xdescribe('when resolving artist tracks', function () {
         var fakePlaylist;
         var firstTrack;

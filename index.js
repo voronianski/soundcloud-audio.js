@@ -49,7 +49,7 @@ SoundCloud.prototype.resolve = function (url, callback) {
     }
 
     var resolveUrl = this._baseUrl + '/resolve.json?url=' + encodeURIComponent(url) + '&client_id=' + this._clientId;
-    this._jsonp(resolveUrl, function (data) {
+    this._json(resolveUrl, function (data) {
         this.cleanData();
 
         if (Array.isArray(data)) {
@@ -74,6 +74,7 @@ SoundCloud.prototype.resolve = function (url, callback) {
     }.bind(this));
 };
 
+// deprecated
 SoundCloud.prototype._jsonp = function (url, callback) {
     var target = document.getElementsByTagName('script')[0] || document.head;
     var script = document.createElement('script');
@@ -89,6 +90,25 @@ SoundCloud.prototype._jsonp = function (url, callback) {
 
     script.src = _appendQueryParam(url, 'callback', id);
     target.parentNode.insertBefore(script, target);
+};
+
+SoundCloud.prototype._json = function (url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var resp = {};
+        try {
+            resp = JSON.parse(xhr.responseText);
+        } catch (err) {
+            // fail silently
+        }
+        callback(resp);
+      }
+    }
+  };
+  xhr.send(null);
 };
 
 SoundCloud.prototype.on = function (e, fn) {
