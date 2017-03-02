@@ -214,4 +214,18 @@ SoundCloud.prototype.cleanData = function () {
     this._playlist = void 0;
 };
 
+SoundCloud.prototype.setVolume = function (volumePercentage) {
+    if (!this.audio.readyState) {
+        return false
+    }
+    this.audio.volume = volumePercentage;
+}
+
+SoundCloud.prototype.setTime = function (seconds) {
+    if (!this.audio.readyState) {
+        return false
+    }
+    this.audio.currentTime = seconds;
+}
+
 module.exports = SoundCloud;
