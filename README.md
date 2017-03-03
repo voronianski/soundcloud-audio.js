@@ -108,6 +108,14 @@ Return to the previous track in playlist.
 
 Helper method for integrating with HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) element and its' [polyfills](https://github.com/LeaVerou/HTML5-Progress-polyfill). Changes playback position, just pass the DOM event as the only argument and all necessary computations will be done automagically.
 
+#### `setVolume(volumePercentage)`
+
+Adjust the volume with a number between 0 and 1, 0 being not audible and 1 being full volume.
+
+#### `setTime(seconds)`
+
+Set the progress of the song to a specific number of seconds.
+
 ### Props
 
 #### `audio`
