@@ -216,14 +216,14 @@ SoundCloud.prototype.cleanData = function () {
 
 SoundCloud.prototype.setVolume = function (volumePercentage) {
     if (!this.audio.readyState) {
-        return false
+        return;
     }
     this.audio.volume = volumePercentage;
 }
 
 SoundCloud.prototype.setTime = function (seconds) {
     if (!this.audio.readyState) {
-        return false
+        return;
     }
     this.audio.currentTime = seconds;
 }
