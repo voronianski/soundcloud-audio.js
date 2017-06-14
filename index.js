@@ -168,6 +168,7 @@ SoundCloud.prototype.play = function (options) {
     }
 
     this.playing = src;
+
     this.audio.play();
 };
 

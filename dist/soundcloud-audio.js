@@ -169,6 +169,7 @@ SoundCloud.prototype.play = function (options) {
     }
 
     this.playing = src;
+
     this.audio.play();
 };
 
@@ -214,6 +215,20 @@ SoundCloud.prototype.cleanData = function () {
     this._track = void 0;
     this._playlist = void 0;
 };
+
+SoundCloud.prototype.setVolume = function (volumePercentage) {
+    if (!this.audio.readyState) {
+        return;
+    }
+    this.audio.volume = volumePercentage;
+}
+
+SoundCloud.prototype.setTime = function (seconds) {
+    if (!this.audio.readyState) {
+        return;
+    }
+    this.audio.currentTime = seconds;
+}
 
 module.exports = SoundCloud;
 
