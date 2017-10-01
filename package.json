@@ -1,6 +1,6 @@
 {
   "name": "soundcloud-audio",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Play SoundCloud tracks and playslists in modern browsers with HTML5 Audio API",
   "main": "index.js",
   "directories": {
@@ -9,7 +9,8 @@
   "scripts": {
     "start": "watchify . -s SoundCloudAudio -o dist/soundcloud-audio.js -v -d",
     "build": "browserify . -s SoundCloudAudio | uglifyjs -cm > dist/soundcloud-audio.min.js",
-    "test": "./node_modules/karma/bin/karma start --single-run --browsers Chrome"
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers Chrome",
+    "lint": "eslint ./index.js --fix"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "browserify": "^8.1.0",
     "chai": "^3.3.0",
+    "eslint": "^4.8.0",
     "jasmine-core": "^2.1.3",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",

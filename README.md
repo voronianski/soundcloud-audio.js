@@ -4,7 +4,7 @@
 [![npm version](http://badge.fury.io/js/soundcloud-audio.svg)](http://badge.fury.io/js/soundcloud-audio)
 [![Download Count](http://img.shields.io/npm/dm/soundcloud-audio.svg?style=flat)](http://www.npmjs.com/package/soundcloud-audio)
 
-> Wrapper around [HTML5 `<audio>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/audio) and SoundCloud [tracks](https://developers.soundcloud.com/docs/api/reference#tracks) and [playlists](https://developers.soundcloud.com/docs/api/reference#playlists) APIs. It could be treated as small replacement for official [SoundCloud SDK](https://developers.soundcloud.com/docs/api/sdks#javascript).
+> Wrapper around [HTML5 `<audio>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/audio) and SoundCloud [tracks](https://developers.soundcloud.com/docs/api/reference#tracks) and [playlists](https://developers.soundcloud.com/docs/api/reference#playlists) APIs. It could be treated as a small replacement for official [SoundCloud SDK](https://developers.soundcloud.com/docs/api/sdks#javascript) or as an independent browser audio library.
 
 ## Install
 
@@ -12,24 +12,22 @@
 npm install soundcloud-audio --save
 ```
 
-or
-
-```bash
-bower install soundcloud-audio --save
-```
-
 ## Usage
 
 ```javascript
-var SoundCloudAudio = require('soundcloud-audio');
+const SoundCloudAudio = require('soundcloud-audio');
 
 // create new instance of audio
-var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
+// clientId is optional but without it you cannot play SoundCloud tracks
+const scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
-// if you have an api stream url you can just play it like that
+// if you have a SoundCloud api stream url you can just play it like that
 scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
 
-// OR in other cases you need to load TRACK and resolve it's data
+// OR if you want to play a NON-SoundCloud audio
+scPlayer.play({streamUrl: 'https://example.com/plain/audio/file'});
+
+// OR if you need to load a SoundCloud track and resolve it's data
 scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (track) {
     // do smth with track object
     // e.g. display data in a view etc.
@@ -42,7 +40,7 @@ scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (tr
     scPlayer.pause();
 });
 
-// OR to load PLAYLIST and resolve it's data
+// OR a SoundCloud playlist and resolve it's data
 scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (playlist) {
     // do smth with array of `playlist.tracks` or playlist's metadata
     // e.g. display playlist info in a view etc.
@@ -69,7 +67,7 @@ scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (playlist) 
 
 Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) property. 
 
-Client ID string is required, so get it here - https://developers.soundcloud.com.
+Client ID string is optional but you can get it here - https://developers.soundcloud.com. 
 
 ### Methods
 
@@ -81,8 +79,8 @@ If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/trac
 
 Starts playing track if it's not playing right now. Accepts `options` object where all fields are completely optional:
 
-- `streamUrl` - SoundCloud API `stream_url` string, if it's passed it will be the main source from where to play audio.
-- `playlistIndex` - number that specifies the position of the track to play in resolved playlist `tracks` array.
+- `streamUrl` - any audio streaming url string (e.g. SoundCloud track's `stream_url`), if it's passed it will be the main playing source.
+- `playlistIndex` - number that specifies the position of the track to play in resolved SoundCloud playlist's `tracks` array.
 
 #### `preload(streamUrl)`
 
@@ -104,9 +102,9 @@ Skip to the next track in playlist to play.
 
 Return to the previous track in playlist.
 
-#### `seek(event)`
+#### `seek(DOMEvent)`
 
-Helper method for integrating with HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) element and its' [polyfills](https://github.com/LeaVerou/HTML5-Progress-polyfill). Changes playback position, just pass the DOM event as the only argument and all necessary computations will be done automagically.
+Helper method for integrating with HTML [`<progress>`](http://caniuse.com/#feat=progressmeter) element and its' [polyfills](https://github.com/LeaVerou/HTML5-Progress-polyfill). It changes `audio.currentTime` with regarding to the progress position. Just pass the DOM event that you received on progress click and all necessary computations will be done automagically.
 
 #### `setVolume(volumePercentage)`
 
@@ -160,16 +158,11 @@ scPlayer.on('ended', function () {
 --- | --- | --- | --- | --- |
 3+ ✔ | 3.5+ ✔ | 9+ ✔ | 10+ ✔ | 3.1+ ✔ |
 
-## Next Goals
-
-- Add more methods of SoundCloud API (like `getTrackById` etc.)
-- Provide streaming options and mimic events in order to easily integrate with [Waveform.js](http://waveformjs.org/)
-
 ## License
 
 MIT Licensed
 
-Copyright (c) 2015, Dmitri Voronianski [dmitri.voronianski@gmail.com](mailto:dmitri.voronianski@gmail.com)
+Copyright (c) 2015-2017 Dmitri Voronianski [dmitri.voronianski@gmail.com](mailto:dmitri.voronianski@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
