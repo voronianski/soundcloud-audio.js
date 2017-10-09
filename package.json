@@ -1,6 +1,6 @@
 {
   "name": "soundcloud-audio",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Play SoundCloud tracks and playslists in modern browsers with HTML5 Audio API",
   "main": "index.js",
   "directories": {
