@@ -136,7 +136,11 @@ SoundCloud.prototype.unbindAll = function () {
 
 SoundCloud.prototype.preload = function (streamUrl, preloadType) {
   this._track = {stream_url: streamUrl};
-  preloadType && (this.audio.preload = preloadType);
+
+  if (preloadType) {
+    this.audio.preload = preloadType;
+  }
+
   this.audio.src = this._clientId ?
     _appendQueryParam(streamUrl, 'client_id', this._clientId) :
     streamUrl;
