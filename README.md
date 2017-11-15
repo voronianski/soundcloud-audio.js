@@ -82,9 +82,16 @@ Starts playing track if it's not playing right now. Accepts `options` object whe
 - `streamUrl` - any audio streaming url string (e.g. SoundCloud track's `stream_url`), if it's passed it will be the main playing source.
 - `playlistIndex` - number that specifies the position of the track to play in resolved SoundCloud playlist's `tracks` array.
 
-#### `preload(streamUrl)`
+#### `preload(streamUrl, preloadType)`
 
 Preloads track data without playing it.
+
+- `preloadType` - This attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values:
+	* 'none': indicates that the audio should not be preloaded;
+	* 'metadata': indicates that only audio metadata (e.g. length) is fetched;
+	* 'auto': indicates that the whole audio file could be downloaded, even if the user is not expected to use it;
+
+	See more at [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes)
 
 #### `pause()`
 
