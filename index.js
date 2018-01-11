@@ -182,7 +182,7 @@ SoundCloud.prototype.play = function (options) {
 
   this.playing = src;
 
-  this.audio.play();
+  return this.audio.play();
 };
 
 SoundCloud.prototype.pause = function () {
@@ -204,7 +204,7 @@ SoundCloud.prototype.next = function () {
   }
 
   if (this._playlist && tracksLength) {
-    this.play({playlistIndex: ++this._playlistIndex});
+    return this.play({playlistIndex: ++this._playlistIndex});
   }
 };
 
@@ -214,7 +214,7 @@ SoundCloud.prototype.previous = function () {
   }
 
   if (this._playlist && this._playlist.tracks.length) {
-    this.play({playlistIndex: --this._playlistIndex});
+    return this.play({playlistIndex: --this._playlistIndex});
   }
 };
 
