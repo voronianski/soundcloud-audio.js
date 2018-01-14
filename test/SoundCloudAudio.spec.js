@@ -91,6 +91,17 @@ describe('soundcloud-audio', function () {
               expect(player.playing).to.contain(secondTrack);
             });
           });
+
+          describe('next() at the end of a playlist', function () {
+            before(function () {
+              player.play({ playlistIndex: (playlist.tracks.length - 1) });
+              player.next({ loop: true });
+            });
+
+            it('should loop to the beginning if loop is set', function () {
+              expect(player.playing).to.contain(firstTrack);
+            });
+          });
         });
       });
     });
