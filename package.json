@@ -8,8 +8,9 @@
   },
   "scripts": {
     "start": "watchify . -s SoundCloudAudio -o dist/soundcloud-audio.js -v -d",
-    "build": "browserify . -s SoundCloudAudio | uglifyjs -cm > dist/soundcloud-audio.min.js",
+    "build": "browserify . -s SoundCloudAudio | tee dist/soundcloud-audio.js | uglifyjs -cm > dist/soundcloud-audio.min.js",
     "test": "./node_modules/karma/bin/karma start --single-run --browsers Chrome",
+    "test:watch": "./node_modules/karma/bin/karma start --auto-watch --browsers Chrome",
     "lint": "eslint ./index.js --fix"
   },
   "repository": {
