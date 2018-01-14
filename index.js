@@ -196,11 +196,16 @@ SoundCloud.prototype.stop = function () {
   this.playing = false;
 };
 
-SoundCloud.prototype.next = function () {
+SoundCloud.prototype.next = function (options) {
+  options = options || {};
   var tracksLength = this._playlist.tracks.length;
 
   if (this._playlistIndex >= tracksLength - 1) {
-    return;
+    if (options.loop) {
+      this._playlistIndex = -1;
+    } else {
+      return;
+    }
   }
 
   if (this._playlist && tracksLength) {
