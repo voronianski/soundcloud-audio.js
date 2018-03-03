@@ -77,14 +77,16 @@ If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/trac
 
 #### `play([options])`
 
-Starts playing track if it's not playing right now. Accepts `options` object where all fields are completely optional:
+Start playing track if it's not playing right now. 
+
+Returns a Promise and accepts `options` object where all fields are completely optional:
 
 - `streamUrl` - any audio streaming url string (e.g. SoundCloud track's `stream_url`), if it's passed it will be the main playing source.
 - `playlistIndex` - number that specifies the position of the track to play in resolved SoundCloud playlist's `tracks` array.
 
 #### `preload(streamUrl, preloadType)`
 
-Preloads track data without playing it.
+Preload track data without playing it.
 
 - `preloadType` - This attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values:
 	* 'none': indicates that the audio should not be preloaded;
@@ -103,11 +105,11 @@ Stop playing audio and rewind it to start.
 
 #### `next()`
 
-Skip to the next track in playlist to play.
+Skip to the next track in playlist to play (returns a Promise).
 
 #### `previous()`
 
-Return to the previous track in playlist.
+Return to the previous track in playlist (returns a Promise).
 
 #### `seek(DOMEvent)`
 
