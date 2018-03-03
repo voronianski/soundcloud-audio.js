@@ -75,20 +75,20 @@ Client ID string is optional but you can get it here - https://developers.soundc
 
 If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/:id/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback **function will receive it as plain object as the only argument**.
 
-#### `play([options])`
+#### `play(options)`
 
 Start playing track if it's not playing right now. 
 
-Returns a Promise and accepts `options` object where all fields are completely optional:
+Returns a Promise and accepts `options` object:
 
-- `streamUrl` - any audio streaming url string (e.g. SoundCloud track's `stream_url`), if it's passed it will be the main playing source.
-- `playlistIndex` - number that specifies the position of the track to play in resolved SoundCloud playlist's `tracks` array.
+- `options.streamUrl` - any audio streaming url string (e.g. SoundCloud track's `stream_url`), if it's passed it will be the main playing source.
+- `options.playlistIndex` - number that specifies the position of the track to play in resolved SoundCloud playlist's `tracks` array.
 
 #### `preload(streamUrl, preloadType)`
 
 Preload track data without playing it.
 
-- `preloadType` - This attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values:
+- `preloadType` - this attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values:
 	* 'none': indicates that the audio should not be preloaded;
 	* 'metadata': indicates that only audio metadata (e.g. length) is fetched;
 	* 'auto': indicates that the whole audio file could be downloaded, even if the user is not expected to use it;
@@ -103,9 +103,13 @@ Pause playing audio.
 
 Stop playing audio and rewind it to start.
 
-#### `next()`
+#### `next(options)`
 
-Skip to the next track in playlist to play (returns a Promise).
+Skip to the next track in playlist to play. 
+
+Returns a Promise and accepts `options` object:
+
+- `options.loop` - boolean, if set to `true` will start at the beginning of a playlist after the last track.
 
 #### `previous()`
 
