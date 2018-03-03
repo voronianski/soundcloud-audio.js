@@ -155,7 +155,11 @@ SoundCloud.prototype.play = function (options) {
   } else if (this._playlist) {
     var length = this._playlist.tracks.length;
     if (length) {
-      this._playlistIndex = options.playlistIndex || 0;
+      if (options.playlistIndex === undefined) {
+        this._playlistIndex = this._playlistIndex || 0;
+      } else {
+        this._playlistIndex = options.playlistIndex;
+      }
 
       // be silent if index is out of range
       if (this._playlistIndex >= length || this._playlistIndex < 0) {
@@ -196,11 +200,16 @@ SoundCloud.prototype.stop = function () {
   this.playing = false;
 };
 
-SoundCloud.prototype.next = function () {
+SoundCloud.prototype.next = function (options) {
+  options = options || {};
   var tracksLength = this._playlist.tracks.length;
 
   if (this._playlistIndex >= tracksLength - 1) {
-    return;
+    if (options.loop) {
+      this._playlistIndex = -1;
+    } else {
+      return;
+    }
   }
 
   if (this._playlist && tracksLength) {
