@@ -167,7 +167,7 @@ scPlayer.on('ended', function () {
 
 ## Browser Support
 
-![Chrome](https://raw.github.com/alrra/browser-logos/master/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/firefox/firefox_48x48.png) | ![IE/Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/edge/edge_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/opera/opera_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/safari/safari_48x48.png)
+Chrome | Firefox | IE/Edge | Opera | Safari
 --- | --- | --- | --- | --- |
 3+ ✔ | 3.5+ ✔ | 9+ ✔ | 10+ ✔ | 3.1+ ✔ |
 
@@ -175,7 +175,7 @@ scPlayer.on('ended', function () {
 
 MIT Licensed
 
-Copyright (c) 2015-2017 Dmitri Voronianski [dmitri.voronianski@gmail.com](mailto:dmitri.voronianski@gmail.com)
+Copyright (c) Dmitri Voronianski [dmitri.voronianski@gmail.com](mailto:dmitri.voronianski@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
