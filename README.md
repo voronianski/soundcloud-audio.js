@@ -71,8 +71,8 @@ scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function(playlist) {
 
 Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) property.
 
-- first argument, client id string, is optional but you can get it here - https://developers.soundcloud.com.
-- second argument, custom API url string, is also optional but it allows you to use SoundCloud API proxy servers to not expose your client ids in the browser
+- first argument, client id string, is optional but it's needed if you plan to use SoundCloud API directly (you can get it here - https://developers.soundcloud.com).
+- second argument, custom API url string, is also optional but it allows you to use SoundCloud API proxy to not expose your client ids in the browser
 
 ### Methods
 
