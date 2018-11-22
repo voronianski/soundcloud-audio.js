@@ -76,9 +76,9 @@ Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element
 
 ### Methods
 
-#### `resolve('url', callback)`
+#### `resolve(url, callback)`
 
-If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/:id/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors callback **function will receive it as plain object as the only argument**.
+If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/tracks/:id/stream`) or you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument. Once data will be resolved without errors, callback function will receive it as plain object as the only argument.
 
 #### `play(options)`
 
