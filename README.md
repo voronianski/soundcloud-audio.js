@@ -19,7 +19,7 @@ npm install soundcloud-audio --save
 const SoundCloudAudio = require('soundcloud-audio');
 
 // create new instance of audio
-// clientId is optional but without it you cannot play SoundCloud tracks
+// clientId is optional but without it you cannot play tracks directly from SoundCloud API
 const scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
 // if you have a SoundCloud api stream url you can just play it like that
@@ -67,11 +67,12 @@ scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function(playlist) {
 
 ## API
 
-#### `new SoundCloudAudio('YOUR_CLIENT_ID')`
+#### `new SoundCloudAudio('YOUR_CLIENT_ID', 'YOUR_CUSTOM_API_URL')`
 
 Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) property.
 
-Client ID string is optional but you can get it here - https://developers.soundcloud.com.
+- first argument, client id string, is optional but you can get it here - https://developers.soundcloud.com.
+- second argument, custom API url string, is also optional but it allows you to use SoundCloud API proxy servers to not expose your client ids in the browser
 
 ### Methods
 
@@ -93,10 +94,10 @@ Returns a Promise and accepts `options` object:
 Preload track data without playing it.
 
 - `preloadType` - this attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values:
-  _ 'none': indicates that the audio should not be preloaded;
-  _ 'metadata': indicates that only audio metadata (e.g. length) is fetched; \* 'auto': indicates that the whole audio file could be downloaded, even if the user is not expected to use it;
-
-      	See more at [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes)
+  - `'none'` - indicates that the audio should not be preloaded
+  - `'metadata'` - indicates that only audio metadata (e.g. length) is fetched
+  - `'auto'` - indicates that the whole audio file could be downloaded, even if the user is not expected to use it
+  - see more at [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes)
 
 #### `pause()`
 
