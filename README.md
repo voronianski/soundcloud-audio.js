@@ -3,6 +3,7 @@
 [![build status](http://img.shields.io/travis/voronianski/soundcloud-audio.js.svg?style=flat)](https://travis-ci.org/voronianski/soundcloud-audio.js)
 [![npm version](http://badge.fury.io/js/soundcloud-audio.svg)](http://badge.fury.io/js/soundcloud-audio)
 [![Download Count](http://img.shields.io/npm/dm/soundcloud-audio.svg?style=flat)](http://www.npmjs.com/package/soundcloud-audio)
+<a href="https://www.buymeacoffee.com/voronianski" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 > Wrapper around [HTML5 `<audio>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/audio) and SoundCloud [tracks](https://developers.soundcloud.com/docs/api/reference#tracks) and [playlists](https://developers.soundcloud.com/docs/api/reference#playlists) APIs. It could be treated as a small replacement for official [SoundCloud SDK](https://developers.soundcloud.com/docs/api/sdks#javascript) or as an independent browser audio library.
 
@@ -22,52 +23,55 @@ const SoundCloudAudio = require('soundcloud-audio');
 const scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
 // if you have a SoundCloud api stream url you can just play it like that
-scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
+scPlayer.play({
+  streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'
+});
 
 // OR if you want to play a NON-SoundCloud audio
-scPlayer.play({streamUrl: 'https://example.com/plain/audio/file'});
+scPlayer.play({ streamUrl: 'https://example.com/plain/audio/file' });
 
 // OR if you need to load a SoundCloud track and resolve it's data
-scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function (track) {
-    // do smth with track object
-    // e.g. display data in a view etc.
-    console.log(track); 
+scPlayer.resolve('https://soundcloud.com/djangodjango/first-light', function(
+  track
+) {
+  // do smth with track object
+  // e.g. display data in a view etc.
+  console.log(track);
 
-    // once track is loaded it can be played
-    scPlayer.play();
+  // once track is loaded it can be played
+  scPlayer.play();
 
-    // stop playing track and keep silence
-    scPlayer.pause();
+  // stop playing track and keep silence
+  scPlayer.pause();
 });
 
 // OR a SoundCloud playlist and resolve it's data
-scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function (playlist) {
-    // do smth with array of `playlist.tracks` or playlist's metadata
-    // e.g. display playlist info in a view etc.
-    console.log(playlist);
+scPlayer.resolve('http://soundcloud.com/jxnblk/sets/yello', function(playlist) {
+  // do smth with array of `playlist.tracks` or playlist's metadata
+  // e.g. display playlist info in a view etc.
+  console.log(playlist);
 
-    // once playlist is loaded it can be played
-    scPlayer.play();
+  // once playlist is loaded it can be played
+  scPlayer.play();
 
-    // for playlists it's possible to switch to another track in queue
-    // e.g. we do it here when playing track is finished 
-    scPlayer.on('ended', function () {
-        scPlayer.next();
-    });
+  // for playlists it's possible to switch to another track in queue
+  // e.g. we do it here when playing track is finished
+  scPlayer.on('ended', function() {
+    scPlayer.next();
+  });
 
-    // play specific track from playlist by it's index
-    scPlayer.play({playlistIndex: 2});
+  // play specific track from playlist by it's index
+  scPlayer.play({ playlistIndex: 2 });
 });
-
 ```
 
 ## API
 
 #### `new SoundCloudAudio('YOUR_CLIENT_ID')`
 
-Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) property. 
+Create an instance of _SoundCloudAudio_, internally uses HTML5 `<audio>` element which is available under [audio](https://github.com/voronianski/soundcloud-audio.js#audio) property.
 
-Client ID string is optional but you can get it here - https://developers.soundcloud.com. 
+Client ID string is optional but you can get it here - https://developers.soundcloud.com.
 
 ### Methods
 
@@ -77,7 +81,7 @@ If you don't have SoundCloud `stream_url` (e.g. `https://api.soundcloud.com/trac
 
 #### `play(options)`
 
-Start playing track if it's not playing right now. 
+Start playing track if it's not playing right now.
 
 Returns a Promise and accepts `options` object:
 
@@ -89,11 +93,10 @@ Returns a Promise and accepts `options` object:
 Preload track data without playing it.
 
 - `preloadType` - this attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values:
-	* 'none': indicates that the audio should not be preloaded;
-	* 'metadata': indicates that only audio metadata (e.g. length) is fetched;
-	* 'auto': indicates that the whole audio file could be downloaded, even if the user is not expected to use it;
+  _ 'none': indicates that the audio should not be preloaded;
+  _ 'metadata': indicates that only audio metadata (e.g. length) is fetched; \* 'auto': indicates that the whole audio file could be downloaded, even if the user is not expected to use it;
 
-	See more at [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes)
+      	See more at [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes)
 
 #### `pause()`
 
@@ -105,7 +108,7 @@ Stop playing audio and rewind it to start.
 
 #### `next(options)`
 
-Skip to the next track in playlist to play. 
+Skip to the next track in playlist to play.
 
 Returns a Promise and accepts `options` object:
 
@@ -156,20 +159,22 @@ var SoundCloudAudio = require('soundcloud-audio');
 
 var scPlayer = new SoundCloudAudio('YOUR_CLIENT_ID');
 
-scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'});
-scPlayer.on('timeupdate', function () {
-    console.log(scPlayer.audio.currentTime);
+scPlayer.play({
+  streamUrl: 'https://api.soundcloud.com/tracks/185533328/stream'
 });
-scPlayer.on('ended', function () {
-    console.log(scPlayer.track.title + ' just ended!');
+scPlayer.on('timeupdate', function() {
+  console.log(scPlayer.audio.currentTime);
+});
+scPlayer.on('ended', function() {
+  console.log(scPlayer.track.title + ' just ended!');
 });
 ```
 
 ## Browser Support
 
-Chrome | Firefox | IE/Edge | Opera | Safari
---- | --- | --- | --- | --- |
-3+ ✔ | 3.5+ ✔ | 9+ ✔ | 10+ ✔ | 3.1+ ✔ |
+| Chrome | Firefox | IE/Edge | Opera | Safari |
+| ------ | ------- | ------- | ----- | ------ |
+| 3+ ✔   | 3.5+ ✔  | 9+ ✔    | 10+ ✔ | 3.1+ ✔ |
 
 ## License
 

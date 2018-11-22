@@ -1,84 +1,93 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title></title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="track">Loading..</div>
 
     <script src="../dist/soundcloud-audio.js"></script>
     <script>
-    (function (global) {
+      (function(global) {
         'use strict';
 
         var $view = document.getElementById('track');
-        var player = global.player = new SoundCloudAudio('08f79801a998c381762ec5b15e4914d5');
+        var player = (global.player = new SoundCloudAudio(
+          null,
+          'https://sc-api-proxy.herokuapp.com'
+        ));
 
-        var prettyTime = function (time) {
-            var hours = Math.floor(time / 3600);
-            var mins = '0' + Math.floor((time % 3600) / 60);
-            var secs = '0' + Math.floor((time % 60));
+        var prettyTime = function(time) {
+          var hours = Math.floor(time / 3600);
+          var mins = '0' + Math.floor((time % 3600) / 60);
+          var secs = '0' + Math.floor(time % 60);
 
-            mins = mins.substr(mins.length - 2);
-            secs = secs.substr(secs.length - 2);
-            if (!isNaN(secs)) {
-                if (hours) {
-                    return hours + ':' + mins + ':' + secs;
-                } else {
-                    return mins + ':' + secs;
-                }
+          mins = mins.substr(mins.length - 2);
+          secs = secs.substr(secs.length - 2);
+          if (!isNaN(secs)) {
+            if (hours) {
+              return hours + ':' + mins + ':' + secs;
             } else {
-                return '00:00';
+              return mins + ':' + secs;
             }
+          } else {
+            return '00:00';
+          }
         };
 
-        var render = function (track) {
-            // track info
-            var $info = document.createElement('h3');
-            $info.innerText = 'Playing: ' + track.user.username + ' - ' + track.title + ' - ';
+        var render = function(track) {
+          // track info
+          var $info = document.createElement('h3');
+          $info.innerText =
+            'Playing: ' + track.user.username + ' - ' + track.title + ' - ';
 
-            // track timings
-            var $timer = document.createElement('span');
-            var renderTimer = function () {
-                $timer.innerText = prettyTime(player.audio.currentTime) + '/' + prettyTime(player.duration);
-            };
-            // rerender timer on every second
-            player.on('timeupdate', renderTimer);
-            renderTimer();
-            $info.appendChild($timer);
+          // track timings
+          var $timer = document.createElement('span');
+          var renderTimer = function() {
+            $timer.innerText =
+              prettyTime(player.audio.currentTime) +
+              '/' +
+              prettyTime(player.duration);
+          };
+          // rerender timer on every second
+          player.on('timeupdate', renderTimer);
+          renderTimer();
+          $info.appendChild($timer);
 
-            // album cover
-            var $img = document.createElement('img');
-            $img.src = track.artwork_url;
+          // album cover
+          var $img = document.createElement('img');
+          $img.src = track.artwork_url;
 
-            // play/pause button
-            var $button = document.createElement('button');
-            var toggleButton = function () {
-                if (player.playing) {
-                    $button.innerText = 'PLAY';
-                    player.pause();
-                } else {
-                    $button.innerText = 'PAUSE';
-                    player.play();
-                }
-            };
-            $button.style.display = 'block';
-            $button.innerText = 'PLAY';
-            $button.addEventListener('click', toggleButton);
-            toggleButton();
+          // play/pause button
+          var $button = document.createElement('button');
+          var toggleButton = function() {
+            if (player.playing) {
+              $button.innerText = 'PLAY';
+              player.pause();
+            } else {
+              $button.innerText = 'PAUSE';
+              player.play();
+            }
+          };
+          $button.style.display = 'block';
+          $button.innerText = 'PLAY';
+          $button.addEventListener('click', toggleButton);
 
-            // clean view
-            $view.removeChild($view.firstChild);
+          // clean view
+          $view.removeChild($view.firstChild);
 
-            // append elements
-            $view.appendChild($info);
-            $view.appendChild($img);
-            $view.appendChild($button);
+          // append elements
+          $view.appendChild($info);
+          $view.appendChild($img);
+          $view.appendChild($button);
         };
 
-        player.resolve('https://soundcloud.com/ksmtk/soul-survivor', render);
-    })(this);
+        player.resolve(
+          'https://soundcloud.com/kosmetism/soul-survivor',
+          render
+        );
+      })(this);
     </script>
-</body>
+  </body>
 </html>

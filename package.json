@@ -10,8 +10,7 @@
     "start": "watchify . -s SoundCloudAudio -o dist/soundcloud-audio.js -v -d",
     "build": "browserify . -s SoundCloudAudio | uglifyjs -cm > dist/soundcloud-audio.min.js",
     "test": "./node_modules/karma/bin/karma start --single-run --browsers Chrome",
-    "test:watch": "./node_modules/karma/bin/karma start --auto-watch --browsers Chrome",
-    "lint": "eslint ./index.js --fix"
+    "test:watch": "./node_modules/karma/bin/karma start --auto-watch --browsers Chrome"
   },
   "repository": {
     "type": "git",
@@ -28,18 +27,28 @@
     "waveform",
     "sdk"
   ],
+  "prettier": {
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged --ignore-path ./public"
+    }
+  },
   "author": "Dmitri Voronianski <dmitri.voronianski@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "browserify": "^16.1.0",
     "chai": "^4.1.2",
-    "eslint": "^4.18.2",
+    "husky": "^1.2.0",
     "jasmine-core": "^3.1.0",
     "karma": "^2.0.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-mocha": "^1.3.0",
     "mocha": "^5.0.1",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0",
     "uglify-js": "^3.3.12",
     "watchify": "^3.10.0"
   },
