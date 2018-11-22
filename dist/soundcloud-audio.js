@@ -140,10 +140,13 @@ SoundCloud.prototype._json = function(url, callback) {
   xhr.send(null);
 };
 
-SoundCloud.prototype._transformTrack = function (track) {
+SoundCloud.prototype._transformTrack = function(track) {
   if (this._baseUrl !== SOUNDCLOUD_API_URL) {
     track.original_stream_url = track.stream_url;
-    track.stream_url = track.stream_url.replace(SOUNDCLOUD_API_URL, this._baseUrl);
+    track.stream_url = track.stream_url.replace(
+      SOUNDCLOUD_API_URL,
+      this._baseUrl
+    );
   }
 
   return track;
