@@ -249,7 +249,7 @@ SoundCloud.prototype.next = function(options) {
     if (options.loop) {
       this._playlistIndex = -1;
     } else {
-      return;
+      return this.play({ playlistIndex: 0 });
     }
   }
 
